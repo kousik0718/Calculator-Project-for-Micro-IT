@@ -1,5 +1,5 @@
-1) calc is task of calculator(seperate html,css,js )
+1) calc is task of calculator
 
-2) K-Kart is task of E-comm Website(combined html,css,js into one code) 
+2) K-Kart is task of E-comm Website 
 
-3) passgen  is task of password generator(seperate html,css,js)
+3) passgen  is task of password generator
