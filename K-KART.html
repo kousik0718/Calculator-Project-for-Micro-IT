@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>K-KART</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .cart-container {
+            background-color: #fff;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .heading {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .cart-items {
+            margin-bottom: 20px;
+        }
+
+        .item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .item img {
+            height: 100px;
+            width: 100px;
+            object-fit: contain;
+            margin-right: 10px;
+        }
+
+        .item h4 {
+            margin: 0;
+            flex: 1;
+        }
+
+        .item p {
+            margin: 0;
+            margin-right: 10px;
+        }
+
+        .item input {
+            width: 50px;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+
+        .item button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .item button:hover {
+            background-color: #0056b3;
+        }
+
+        .total {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .total img{
+           height: 100px;
+            width: 100px;
+            object-fit: contain;
+            margin-right: 10px;
+        }
+
+        .checkout-button {
+            background-color: #28a745;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            max-width: 200px;
+            margin: 0 auto;
+            display: block;
+            text-align: center;
+        }
+
+        .checkout-button:hover {
+            background-color: #218838;
+        }
+        h1{
+          color: purple;
+        }
+        body {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <center>
+        <h1 class="Title">K-KART</h1>
+        <hr/>
+        <div class="cart-container">
+            <h3 class="heading">PRODUCTS</h3>
+            <div class="cart-items">
+                <div class="item" data-product-name="Fossil-Q Mens Smartwatch" data-product-price="18995.00">
+                    <img src="Fossil-Q Mens Smartwatch.jpg" height="100" width="100">
+                    <h4>Fossil-Q Mens Smartwatch</h4>
+                    <p>Price:₹18,995.00</p>
+                    <input type="number" value="1" min="1">
+                    <button type="button" class="add-to-cart-button">Add to Cart</button>
+                </div>
+                <hr/>
+                <div class="item" data-product-name="OnePlus 11R" data-product-price="39999.00">
+                    <img src="OnePlus 11R.jpg" height="100" width="100">
+                    <h4>OnePlus 11R</h4>
+                    <p>Price:₹39,999.00</p>
+                    <input type="number" value="1" min="1">
+                    <button type="button" class="add-to-cart-button">Add to Cart</button>
+                </div>
+                <hr/>
+            </div>
+            <div class="total">
+                <h3>CART</h3>
+               <div id="cart-items-display">
+
+               </div>
+                <p>Total:₹<span id="cart-total">0.00</span></p>
+            </div>
+            <hr/>
+            <button type="button" class="checkout-button">CheckOut</button>
+            <hr/>
+        </div>
+    </center>
+
+    <script>
+      const addToCartButtons = document.querySelectorAll('.add-to-cart-button');
+      const cartItemsDisplay = document.getElementById('cart-items-display');
+      const cartTotalElement = document.getElementById('cart-total');
+      const checkoutButton = document.querySelector('.checkout-button');
+      let cart = [];
+      function updateCartDisplay() {
+        cartItemsDisplay.innerHTML = '';
+        let total = 0;
+        if (cart.length === 0) {
+            cartItemsDisplay.innerHTML = "<p>Your cart is empty</p>";
+        }
+        else{
+            cart.forEach(item => {
+            const itemDiv = document.createElement('div');
+            itemDiv.classList.add('cart-item');
+            itemDiv.innerHTML = `<img src="${item.imageSrc}" height="100" width="100">  ${item.name} x ${item.quantity} = ₹${item.price * item.quantity}`;
+            cartItemsDisplay.appendChild(itemDiv);
+            total += item.price * item.quantity;
+        });
+        }
+
+
+        cartTotalElement.textContent = total.toFixed(2);
+      }
+
+
+
+      addToCartButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const itemElement = button.closest('.item');
+            const productName = itemElement.dataset.productName;
+            const productPrice = parseFloat(itemElement.dataset.productPrice);
+            const productImage = itemElement.querySelector('img').src;
+            const quantityInput = itemElement.querySelector('input');
+            const quantity = parseInt(quantityInput.value);
+
+            if (quantity <= 0) {
+                alert('Please enter a valid quantity (1 or more).');
+                return;
+            }
+             const existingItem = cart.find(item => item.name === productName);
+
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                 cart.push({
+                    name: productName,
+                    price: productPrice,
+                    quantity: quantity,
+                    imageSrc: productImage
+                });
+            }
+
+
+            updateCartDisplay();
+            alert(`${productName} added to cart successfully!`);
+        });
+      });
+
+      checkoutButton.addEventListener('click', () => {
+        if (cart.length === 0) {
+            alert('Your cart is empty! Add some products before checking out.');
+        } else {
+             alert('Thank you for your purchase! Your order has been placed.');
+             cart = [];
+             updateCartDisplay();
+        }
+
+      });
+    </script>
+</body>
+</html>
