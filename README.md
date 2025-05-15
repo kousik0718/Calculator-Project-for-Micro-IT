@@ -1,6 +1,6 @@
 1) calc1 is task of calculator
-   Files related-> (calc1.html,calc01.png,script.js,style.css)
+   Files related-> (calc1.html,calc01.png,script.js,styles.css)
 
 2) K-Kart is task of E-comm Website
-   Files related-> (K-Kart.html,K-Kart.png)
+   Files related-> (k-kart.html,k-kart.png)
 
