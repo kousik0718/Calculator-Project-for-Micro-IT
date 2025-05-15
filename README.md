@@ -2,5 +2,5 @@
    Files related-> (calc1.html,calc01.png,script.js,styles.css)
 
 2) K-Kart is task of E-comm Website
-   Files related-> (k-kart.html,k-kart.png)
+   Files related-> (k-kart.html,k-kart.png,One Plus 13R.jpg)
 
